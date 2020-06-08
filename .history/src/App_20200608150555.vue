@@ -7,3 +7,4 @@
 <style lang="scss">
  @import '../src/style/currency'
 </style>
+a
