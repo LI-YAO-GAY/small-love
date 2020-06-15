@@ -104,7 +104,7 @@ export default {
   },
   methods: {
     Look() {
-     this.$router.push('published')
+     this.$router.path('published')
     },
     release() {
       this.$refs.ruleForm.validate(valid => {
