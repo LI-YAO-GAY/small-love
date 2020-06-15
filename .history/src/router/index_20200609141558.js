@@ -1,0 +1,65 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from '../views/Home.vue'
+import Layout from '../views/Layout.vue'
+
+Vue.use(VueRouter)
+
+const routes = [
+
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/Login'),
+    meta: {
+      title: '登录'
+    },
+  },
+  {
+    path: '/Registe',
+    name: 'Registe',
+    component: () => import('../views/Registe'),
+    meta: {
+      title: '注册'
+    },
+  },
+  {
+    path: '/',
+    name: 'Layout',
+    component: Layout,
+    meta: {
+      title: '首页'
+    },
+    children:[
+      {
+        path: '/',
+        name: 'Home',
+        component: Home,
+        meta: {
+          title: '首页'
+        },
+      },
+    ]
+  },
+]
+
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
+})
+
+
+
+let whitePath = ['/login']
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
+  next()
+  let ruleForm = JSON.parse(localStorage.getItem('ruleForm'))
+  if (whitePath.includes(to.path)) {
+    next()
+  } else {
+    ruleForm ? next() : next('/login')
+  }
+})
+export default router
